@@ -1,5 +1,9 @@
 <div class="center jumbotron jumpbotron_ic">
   <h1>Hello, world!</h1>
   <p>...</p>
-  <%= link_to "Sign up", "#", class: "btn btn-warning btn-lg" %>
+  <% if @user %>
+    <%= "Welcome, mr. #{@user.username}" %>
+  <% else %>
+    <%= link_to "Sign up", "signup", class: "btn btn-warning btn-lg" %>
+  <% end %>
 </div>
