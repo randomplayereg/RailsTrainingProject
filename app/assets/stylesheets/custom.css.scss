@@ -1,2 +1,29 @@
+$navbar-default-bg: #08088A;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+#logo {
+  float: left;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  font-weight: bold;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.jumpbotron {
+  background: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
+  //background-image: asset-url('bg.jpg');
+  //backgournd-size: cover;
+  height: 550px;
+}
