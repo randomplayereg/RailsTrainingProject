@@ -8,9 +8,10 @@
       <th>Title</th>
       <th>Author</th>
       <th>Description</th>
+      <th>Created by</th>
       <th colspan="3"></th>
-    </tr>
   </thead>
+</tr>
 
   <tbody>
     <% @books.each do |book| %>
@@ -18,6 +19,7 @@
         <td><%= book.title %></td>
         <td><%= book.author %></td>
         <td><%= book.description %></td>
+        <td><%= User.find(book.user_id).username %></td>
         <td><%= link_to 'Show', book %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
         <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>

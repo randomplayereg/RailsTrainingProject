@@ -1,6 +1,9 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+
   before_action :require_user, except: [:show, :index]
+  before_action :set_book, only: [:show, :require_permission]
+  before_action :require_permission, only: [:edit, :update, :destroy]
+
 
 
   # GET /books
@@ -76,7 +79,11 @@ class BooksController < ApplicationController
     end
 
     # Users can only edit books which belong to them
-    def require_same_user
-
+    def require_permission
+      owner = User.find(set_book.user_id)
+      if current_user != owner && current_user.admin == false
+        flash[:danger] = "You can't access to other's books"
+        redirect_to books_url
+      end
     end
 end

@@ -1,7 +1,7 @@
 <%= form_with(model: @user, local: true) do |form| %>
   <div class="field">
     <%= form.label :username %>
-    <%= form.text_field :username %>
+    <%= form.text_field :username, autofocus: true%>
   </div>
 
   <div class="field">
