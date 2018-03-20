@@ -1,12 +1,14 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+
   before_action :require_user, except: [:show, :index]
 
+  before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    #@books = Book.all
+    @books = Book.paginate(page: params[:page], :per_page => 5)
   end
 
   # GET /books/1
@@ -76,7 +78,14 @@ class BooksController < ApplicationController
     end
 
     # Users can only edit books which belong to them
-    def require_same_user
-
+    def require_permission
+      owner = User.find(@book.user_id)
+      if !logged_in?
+        flash[:danger] = "You must log in"
+      else if owner != current_user && current_user.admin != true
+        flash[:danger] = "You don't have permission to touch other's books!"
+        redirect_to books_path
+        end
+      end
     end
 end
