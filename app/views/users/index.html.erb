@@ -7,6 +7,7 @@
     <tr>
       <th>Username</th>
       <th>Email</th>
+      <th>Other info</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= user.username %></td>
         <td><%= user.email %></td>
+        <td><%= pluralize(user.books.count, 'book')%></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user.id) %></td>
       </tr>
