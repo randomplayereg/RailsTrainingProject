@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :show, :update, :destroy]
+
+  before_action :require_user, except: [:new, :show, :index, :create]
+  before_action :set_user, only: [:show, :require_same_user, :require_admin]
+  before_action :require_same_user, only: [:edit, :update]
+  before_action :require_admin, only: [:destroy]
 
   def new
     @user = User.new
@@ -46,7 +50,23 @@ class UsersController < ApplicationController
   end
 
   private
-  def user_params
-    params.require(:user).permit(:username, :email, :password)
-  end
+
+    def user_params
+      params.require(:user).permit(:username, :email, :password)
+    end
+
+    def require_same_user
+      profile_owner = set_user
+      if current_user != profile_owner && current_user.admin == false
+        flash[:danger] = "You can't edit other's profile"
+        redirect_to users_path
+      end
+    end
+
+    def require_admin
+      if current_user.admin == false
+        flash[:danger] = "You must be admin to delete users!"
+        redirect_to users_path
+      end
+    end
 end
