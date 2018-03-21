@@ -9,17 +9,17 @@
 User.destroy_all
 
 User.create(username: "admin", email: "admin@imug.com", password: "admin", admin: true)
-10.times do
+20.times do
   username = Faker::Internet.unique.user_name(5..10)
   email = Faker::Internet.unique.email
   User.create!(username: username, email: email, password: "1")
 end
 
-50.times do
+100.times do
   title = Faker::Book.title
   author = Faker::Book.author
   description = Faker::Book.genre
   #ids = User.where(admin: false).pluck(:id).shuffle[0]
-  ids = User.pluck(:id).shuffle[0]  
+  ids = User.pluck(:id).shuffle[0]
   Book.create(title: title, author: author, description: description, user_id: ids)
 end

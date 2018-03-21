@@ -10,7 +10,17 @@ class BooksController < ApplicationController
   # GET /books.json
   def index
     #@books = Book.all
-    @books = Book.paginate(:page => params[:page], :per_page => 5)
+    if params[:keyword]
+      keyw = params[:keyword]
+      # @books = Book.where(title.downcase.include?(keyw)).paginate(:page => params[:page], :per_page => 10)
+      @books = Book.where('title like ?', "%#{params[:keyword]}%").paginate(:page => params[:page], :per_page => 10)
+
+      # sql = "SELECT * from Book
+      #         WHERE INSTR(LOWER(title), keyw) > 0"
+      # records_array = ActiveRecord::Base.connection.execute(sql)
+    else
+      @books = Book.paginate(:page => params[:page], :per_page => 5)
+    end
   end
 
   # GET /books/1
@@ -79,7 +89,7 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:title, :author, :description)
+      params.require(:book).permit(:title, :author, :description, :keyword)
     end
 
     # Users can only edit books which belong to them
