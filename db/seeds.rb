@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.destroy_all
+
+User.create(username: "admin", email: "admin@imug.com", password: "admin", admin: true)
+10.times do
+  username = Faker::Internet.user_name(5..10)
+  email = Faker::Internet.email
+  User.create!(username: username, email: email, password: "1")
+end
+
+40.times do
+  
+end
