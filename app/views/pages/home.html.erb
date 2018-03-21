@@ -4,6 +4,5 @@
     <%= link_to "Sign up", "signup", class: "btn btn-warning btn-lg" %>
   <% else %>
     <h1><%= "Hello again, Mr. #{current_user.username.capitalize}!" %></h1>
-    <h1><%= "What did you do? #{session[:lul]}" %></h1>
   <% end %>
 </div>
