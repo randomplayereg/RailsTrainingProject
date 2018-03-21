@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "Welcome the the club, Mr.#{@user.username}"
+      flash[:success] = "Your account has been created, you can log-in now, Mr.#{@user.username}!"
       redirect_to login_path
     else
       render 'new'
@@ -19,7 +19,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    #@users = User.all
+    @users = User.paginate(:page => params[:page], :per_page => 5)
   end
 
   def show
@@ -30,6 +31,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
+      flash[:success] = 'Your account has been updated!'
       redirect_to users_path
     else
       render 'edit'
