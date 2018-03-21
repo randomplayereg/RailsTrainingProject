@@ -36,7 +36,6 @@ gem 'bcrypt', '~> 3.1.7'
 # Pagination using will_paginate
 gem 'will_paginate', '~> 3.1.0'
 
-# Using faker, generate random data
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 # Use Capistrano for deployment

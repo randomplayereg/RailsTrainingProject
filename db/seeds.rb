@@ -14,7 +14,3 @@ User.create(username: "admin", email: "admin@imug.com", password: "admin", admin
   email = Faker::Internet.email
   User.create!(username: username, email: email, password: "1")
 end
-
-40.times do
-  
-end
