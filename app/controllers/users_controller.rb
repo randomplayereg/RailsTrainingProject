@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
 
   before_action :require_user, except: [:new, :show, :index, :create]
-  before_action :set_user, only: [:show, :require_same_user, :require_admin]
-  before_action :require_same_user, only: [:edit, :update]
-  before_action :require_admin, only: [:destroy]
+  before_action :set_user, only: [:show, :require_permission]
+  before_action :require_permission, only: [:edit, :update, :destroy]
 
   def new
     @user = User.new
@@ -40,14 +39,18 @@ class UsersController < ApplicationController
   def destroy
     if @user.destroy
       flash[:success] = "#{@user.username} has been deleted!"
+      if current_user == @user
+        cookies.delete :uid
+      end
       redirect_to users_path
     end
   end
 
   private
-  def set_user
-    @user = User.find(params[:id])
-  end
+
+    def set_user
+      @user = User.find(params[:id])
+    end
 
   private
 
@@ -55,17 +58,10 @@ class UsersController < ApplicationController
       params.require(:user).permit(:username, :email, :password)
     end
 
-    def require_same_user
+    def require_permission
       profile_owner = set_user
       if current_user != profile_owner && current_user.admin == false
         flash[:danger] = "You can't edit other's profile"
-        redirect_to users_path
-      end
-    end
-
-    def require_admin
-      if current_user.admin == false
-        flash[:danger] = "You must be admin to delete users!"
         redirect_to users_path
       end
     end
