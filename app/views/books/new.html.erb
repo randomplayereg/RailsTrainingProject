@@ -1,5 +1,41 @@
 <h1>New Book</h1>
 
-<%= render 'form', book: @book %>
+<form>
+  <div><input type="text" name="title" value="1" id="a"></div>
+  <div><input type="text" name="author" value="2" id="b"></div>
+  <div><input type="text" name="description" value="3" id="c"></div>
+  <div>
+    <input type="submit" name="g" value="Submit" id="g">
+  </div>
+</form>
+
+<p id="test"></p>
 
 <%= link_to 'Back', books_path %>
+
+<script>
+  //var formData = JSON.stringify($("#BookInputForm").serializeArray());
+
+  $(document).ready(function(){
+    $( "form" ).submit(function( event ) {
+      console.log( $( this ).serializeArray() );
+      event.preventDefault();
+    });
+  });
+  // })
+  //   $('#inputform').submit(function(){
+  //     var formData = JSON.stringify($('form').serializeArray());
+  //     $.ajax({
+  //       type: "POST",
+  //       url: "/books",
+  //       data: formData,
+  //       success: function(){
+  //         $('#test').html('lalala');
+  //       },
+  //       dataType: "json",
+  //       contentType : "application/json"
+  //     });
+  //   });
+  // });
+
+</script>

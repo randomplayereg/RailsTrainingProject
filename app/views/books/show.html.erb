@@ -2,17 +2,34 @@
 
 <p>
   <strong>Title:</strong>
-  <%= @book.title %>
+  <!-- <%= @book.title %> -->
+  <span id="title"></span>
 </p>
 
 <p>
   <strong>Author:</strong>
-  <%= @book.author %>
+  <!-- <%= @book.author %> -->
+  <span id="author"></span>
 </p>
 
 <p>
   <strong>Description:</strong>
-  <%= @book.description %>
+  <!-- <%= @book.description %> -->
+  <span id="desc"></span>
 </p>
 
 <%= link_to 'Back', books_path %>
+
+<script>
+$.ajax({
+    type: "GET",
+    url: "/books/" + <%= "#{@book.id}" %>,
+    dataType: "json",
+    success: function(data){
+        alert(data.title); // Will alert Max
+        $('#title').html(data.title);
+        $('#author').html(data.author);
+        $('#desc').html(data.description);
+    }
+});
+</script>

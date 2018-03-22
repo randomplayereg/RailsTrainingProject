@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       #session[:user_id] = user.id
-      cookies[:uid] = {value: user.id, expires: 5.minute.from_now}
+      cookies[:uid] = {value: user.id, expires: 2.hours.from_now}
       flash[:success] = "You have logged in successfully!"
       redirect_to root_path
     else
