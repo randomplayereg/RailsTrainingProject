@@ -11,13 +11,8 @@ class BooksController < ApplicationController
   def index
     #@books = Book.all
     if params[:keyword]
-      keyw = params[:keyword]
-      # @books = Book.where(title.downcase.include?(keyw)).paginate(:page => params[:page], :per_page => 10)
+      cookies[:keyword] = {value: params[:keyword], expires: 3.minutes.from.now}
       @books = Book.where('title like ?', "%#{params[:keyword]}%").paginate(:page => params[:page], :per_page => 10)
-
-      # sql = "SELECT * from Book
-      #         WHERE INSTR(LOWER(title), keyw) > 0"
-      # records_array = ActiveRecord::Base.connection.execute(sql)
     else
       @books = Book.paginate(:page => params[:page], :per_page => 5)
     end

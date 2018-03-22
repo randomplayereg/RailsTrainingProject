@@ -37,7 +37,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form> -->
       <%= form_tag(books_path, method: :get, class: "navbar-form navbar-left") do %>
-        <%= text_field_tag :keyword %>
+        <%= text_field_tag :keyword, cookies[:keyword], class: "form-control" %>
         <!-- <input type="text" class="form-control" placeholder="Search"> -->
         <%= submit_tag 'Search', class: "btn btn-default" %>
       <% end %>
