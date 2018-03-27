@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
 
+
   before_action :require_user, except: [:show, :index]
   before_action :set_book, only: [:show, :require_permission]
   before_action :require_permission, only: [:edit, :update, :destroy]
@@ -35,25 +36,33 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    require 'json'
 
-    information = request.raw_post
-    data_parsed = JSON.parse(information)
-    @book = data_parsed
-    debugger    
+    # require 'json'
+    # hash = JSON.parse
+    # debugger
     # @book = Book.new(book_params)
-    # @book.user_id = current_user.id
+    # @book.user_id = cookies[:uid]
+    # @var = JSON.parse(book_params)
+
+    # debugger
+    # @book = data_parsed
     #
-    # respond_to do |format|
-    #   if @book.save
-    #     flash[:success] = 'Book was successfully created.'
-    #     format.html { redirect_to @book } #success: 'Book was successfully created.' }
-    #     format.json { render :show, status: :created, location: @book }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @book.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
+    require 'json'
+    # string = params[:_json].require(:book).permit(:title, :author, :description)
+
+    @book = Book.new(book_params)
+    @book.user_id = current_user.id
+    respond_to do |format|
+      if @book.save
+        flash[:success] = 'Book was successfully created.'
+        format.html { redirect_to @book } #success: 'Book was successfully created.' }
+        format.json { render :show, status: :created, location: @book }
+      else
+        format.html { render :new }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /books/1

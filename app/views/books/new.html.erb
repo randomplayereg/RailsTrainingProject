@@ -1,9 +1,9 @@
 <h1>New Book</h1>
 
 <form>
-  <div><input type="text" name="title" value="1" id="a"></div>
-  <div><input type="text" name="author" value="2" id="b"></div>
-  <div><input type="text" name="description" value="3" id="c"></div>
+  <div><input type="text" name="title" placeholder="Title"></div>
+  <div><input type="text" name="author" placeholder="Author"></div>
+  <div><input type="text" name="description" placeholder="Description"></div>
   <div>
     <input type="submit" name="g" value="Submit" id="g">
   </div>
@@ -14,28 +14,38 @@
 <%= link_to 'Back', books_path %>
 
 <script>
-  //var formData = JSON.stringify($("#BookInputForm").serializeArray());
-
+  function objectifyForm(formArray) {//serialize data function
+    var returnArray = {};
+    for (var i = 0; i < formArray.length; i++){
+      returnArray[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return returnArray;
+  }
   $(document).ready(function(){
-    $( "form" ).submit(function( event ) {
-      console.log( $( this ).serializeArray() );
-      event.preventDefault();
+    $( "form" ).submit(function( e ) {
+      e.preventDefault();
+      var jsontype = objectifyForm($( this ).serializeArray());
+      var formdata = JSON.stringify(jsontype);
+
+      // var formdata = JSON.stringify($( this ).serializeArray());
+      console.log(jsontype);
+
+      $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/books",
+          contentType: "application/json; charset=utf-8", // this
+          dataType: "json", // and this
+          data: formdata ,
+          success: function(){
+            $('#test').html('The book has succesffuly created!');
+          },
+          processData: false,
+          cache: false
+      });
+
+      //return false;
     });
   });
-  // })
-  //   $('#inputform').submit(function(){
-  //     var formData = JSON.stringify($('form').serializeArray());
-  //     $.ajax({
-  //       type: "POST",
-  //       url: "/books",
-  //       data: formData,
-  //       success: function(){
-  //         $('#test').html('lalala');
-  //       },
-  //       dataType: "json",
-  //       contentType : "application/json"
-  //     });
-  //   });
-  // });
 
+  $.post
 </script>

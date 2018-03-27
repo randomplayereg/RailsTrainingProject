@@ -1,6 +1,12 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
 <h1>Books</h1>
+
+<div>
+  <input id="chosenpage" type="number"></input>
+  <button id="testbutton" type="button">test</button>
+</div>
+
 <% if @books %>
   <table>
     <thead>
@@ -41,3 +47,11 @@
 <br>
 
 <%= link_to 'New Book', new_book_path %>
+
+<script>
+  $(document).ready(function(){
+    $("#testbutton").click(function(){
+      var query = $.param({page: 5});
+    });
+  });
+</script>
